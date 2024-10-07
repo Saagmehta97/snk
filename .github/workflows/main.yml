@@ -15,7 +15,7 @@ jobs:
       - run: yarn install --frozen-lockfile
       
       - name: Fix formatting issues with Prettier
-      - run: yarn prettier --write '**/*.{ts,js,json,md,yml,yaml}' 
+        run: yarn prettier --write '**/*.{ts,js,json,md,yml,yaml}' 
       
       - run: npm run type
       - run: npm run lint
