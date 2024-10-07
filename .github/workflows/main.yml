@@ -1,6 +1,11 @@
 name: main
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 0 * * 0'
 
 jobs:
   test:
