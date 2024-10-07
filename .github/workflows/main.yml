@@ -46,12 +46,11 @@ jobs:
           test -f dist/github-contribution-grid-snake-dark.svg
           test -f dist/github-contribution-grid-snake.gif
 
-      - uses: crazy-max/ghaction-github-pages@v2  # Use version v2
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3  # Replacing crazy-max with peaceiris
         with:
-          target_branch: output
-          build_dir: dist
-        env:
-          GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN_GH_PAGES }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: dist  # This points to where your built files are stored (same as before)
 
   test-action-svg-only:
     runs-on: ubuntu-latest
@@ -84,12 +83,11 @@ jobs:
           test -f dist/github-contribution-grid-snake.svg
           test -f dist/github-contribution-grid-snake-dark.svg
 
-      - uses: crazy-max/ghaction-github-pages@v2  # Use version v2
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3  # Replacing crazy-max with peaceiris
         with:
-          target_branch: output-svg-only
-          build_dir: dist
-        env:
-          GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN_GH_PAGES }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: dist  # This points to where your built files are stored
 
   deploy-ghpages:
     runs-on: ubuntu-latest
@@ -105,10 +103,9 @@ jobs:
         env:
           GITHUB_USER_CONTRIBUTION_API_ENDPOINT: https://snk-one.vercel.app/api/github-user-contribution/
 
-      - uses: crazy-max/ghaction-github-pages@v2  # Use version v2
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3  # Replacing crazy-max with peaceiris
         if: success() && github.ref == 'refs/heads/main'
         with:
-          target_branch: gh-pages
-          build_dir: packages/demo/dist
-        env:
-          GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN_GH_PAGES }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: packages/demo/dist  # This points to where the built files are stored for the demo
