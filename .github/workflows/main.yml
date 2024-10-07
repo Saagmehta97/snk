@@ -13,7 +13,10 @@ jobs:
           cache: yarn
           node-version: 20
       - run: yarn install --frozen-lockfile
-
+      
+      - name: Fix formatting issues with Prettier
+      - run: yarn prettier --write '**/*.{ts,js,json,md,yml,yaml}' 
+      
       - run: npm run type
       - run: npm run lint
       - run: npm run test --ci
@@ -47,10 +50,10 @@ jobs:
           test -f dist/github-contribution-grid-snake.gif
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3  # Replacing crazy-max with peaceiris
+        uses: peaceiris/actions-gh-pages@v3 
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: dist  # This points to where your built files are stored (same as before)
+          publish_dir: dist
 
   test-action-svg-only:
     runs-on: ubuntu-latest
@@ -84,10 +87,10 @@ jobs:
           test -f dist/github-contribution-grid-snake-dark.svg
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3  # Replacing crazy-max with peaceiris
+        uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: dist  # This points to where your built files are stored
+          publish_dir: dist
 
   deploy-ghpages:
     runs-on: ubuntu-latest
@@ -104,8 +107,9 @@ jobs:
           GITHUB_USER_CONTRIBUTION_API_ENDPOINT: https://snk-one.vercel.app/api/github-user-contribution/
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3  # Replacing crazy-max with peaceiris
+        uses: peaceiris/actions-gh-pages@v3
         if: success() && github.ref == 'refs/heads/main'
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: packages/demo/dist  # This points to where the built files are stored for the demo
+          publish_dir: packages/demo/dist
+          force_orphan: true
